@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import urlRepository from "../repositories/url.repository.js";
 import ApiError from "../utils/ApiError.js";
+import urlCache from "../cache/url.cache.js";
 
 class UrlService {
 async create(
@@ -50,30 +51,56 @@ async create(
 }
 
   async redirect(shortCode) {
+  // 1️⃣ Check Redis first
+  const cachedUrl = await urlCache.get(shortCode);
+
+  if (cachedUrl) {
+    console.log("🟢 Cache HIT");
+
     const url =
       await urlRepository.findByShortCode(shortCode);
 
-    if (!url) {
-      throw new ApiError(
-        404,
-        "Short URL not found"
-      );
+    if (url) {
+      await urlRepository.incrementClicks(url.id);
     }
 
-    if (
-      url.expiresAt &&
-      url.expiresAt < new Date()
-    ) {
-      throw new ApiError(
-        410,
-        "URL has expired"
-      );
-    }
-
-    await urlRepository.incrementClicks(url.id);
-
-    return url.originalUrl;
+    return cachedUrl;
   }
+
+  console.log("🟡 Cache MISS");
+
+  // 2️⃣ Not in Redis → Query PostgreSQL
+  const url =
+    await urlRepository.findByShortCode(shortCode);
+
+  if (!url) {
+    throw new ApiError(
+      404,
+      "Short URL not found"
+    );
+  }
+
+  if (
+    url.expiresAt &&
+    url.expiresAt < new Date()
+  ) {
+    throw new ApiError(
+      410,
+      "URL has expired"
+    );
+  }
+
+  // 3️⃣ Save in Redis
+  await urlCache.set(
+    shortCode,
+    url.originalUrl
+  );
+
+  // 4️⃣ Increment clicks
+  await urlRepository.incrementClicks(url.id);
+
+  return url.originalUrl;
+}
 
   // ✅ Backend Pagination
   async getMyUrls(
@@ -144,31 +171,42 @@ async create(
   }
 
   const updatedUrl =
-    await urlRepository.update(
-      id,
-      userId,
-      {
-        originalUrl,
-        shortCode,
-      }
-    );
+  await urlRepository.update(
+    id,
+    userId,
+    {
+      originalUrl,
+      shortCode,
+    }
+  );
 
-  return updatedUrl;
+// Remove old cache
+await urlCache.delete(existingUrl.shortCode);
+
+// If alias changed, remove the new alias too
+if (shortCode !== existingUrl.shortCode) {
+  await urlCache.delete(shortCode);
 }
 
-  async delete(id, userId) {
-    const deletedUrl =
-      await urlRepository.delete(id, userId);
+return updatedUrl;
+}
 
-    if (!deletedUrl) {
-      throw new ApiError(
-        404,
-        "URL not found"
-      );
-    }
+async delete(id, userId) {
+  const deletedUrl =
+    await urlRepository.delete(id, userId);
 
-    return deletedUrl;
+  if (!deletedUrl) {
+    throw new ApiError(
+      404,
+      "URL not found"
+    );
   }
+
+  // Remove from Redis cache
+  await urlCache.delete(deletedUrl.shortCode);
+
+  return deletedUrl;
+}
 async getStats(userId) {
   return await urlRepository.getStats(userId);
 }

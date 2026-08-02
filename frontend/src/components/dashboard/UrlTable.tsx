@@ -29,6 +29,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 import { deleteUrl } from "@/services/url.service";
@@ -142,24 +143,45 @@ export default function UrlTable({
               />
 
               <AlertDialog>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="w-20"
-                  onClick={() => {
-                    const confirmed =
-                      window.confirm(
-                        "Delete this URL?"
-                      );
+  <AlertDialogTrigger
+    render={
+      <Button
+        variant="destructive"
+        size="sm"
+        className="w-20"
+      >
+        <Trash2 className="h-4 w-4" />
+        Delete
+      </Button>
+    }
+  />
 
-                    if (confirmed) {
-                      handleDelete(url.id);
-                    }
-                  }}
-                >
-                  <Trash2 className="h-4 w-4" /> Delete
-                </Button>
-              </AlertDialog>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>
+        Delete URL?
+      </AlertDialogTitle>
+
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+
+    <AlertDialogFooter>
+      <AlertDialogCancel>
+        Cancel
+      </AlertDialogCancel>
+
+      <AlertDialogAction
+        onClick={() =>
+          handleDelete(url.id)
+        }
+      >
+        Delete
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
               </div>
             </TableCell>
           </TableRow>
