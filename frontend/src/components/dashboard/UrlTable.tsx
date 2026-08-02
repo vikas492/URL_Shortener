@@ -77,7 +77,8 @@ export default function UrlTable({
   };
 
   return (
-    <Table>
+    <div className="mx-auto w-fit max-w-full overflow-x-auto rounded-xl border bg-card shadow-sm">
+      <Table className="w-fit min-w-[760px]">
       <TableHeader>
         <TableRow>
           <TableHead>
@@ -101,8 +102,8 @@ export default function UrlTable({
       <TableBody>
         {urls.map((url) => (
           <TableRow key={url.id}>
-            <TableCell className="max-w-sm truncate">
-              {url.originalUrl}
+            <TableCell className="max-w-[320px] truncate" title={url.originalUrl}>
+              <span className="block truncate">{url.originalUrl}</span>
             </TableCell>
 
             <TableCell>
@@ -110,7 +111,7 @@ export default function UrlTable({
                 href={`http://localhost:3000/${url.shortCode}`}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-600 hover:underline"
+                className="font-medium text-blue-600 hover:text-blue-500 hover:underline dark:text-blue-400"
               >
                 {url.shortCode}
               </a>
@@ -120,17 +121,19 @@ export default function UrlTable({
               {url.clicks}
             </TableCell>
 
-            <TableCell className="flex items-center gap-2">
+            <TableCell>
+              <div className="flex items-center gap-3">
               <Button
                 variant="outline"
-                size="icon"
+                size="sm"
+                className="w-20"
                 onClick={() =>
                   copyToClipboard(
                     url.shortCode
                   )
                 }
               >
-                <Copy className="h-4 w-4" />
+                <Copy className="h-4 w-4" /> Copy
               </Button>
 
               <EditUrlDialog
@@ -141,7 +144,8 @@ export default function UrlTable({
               <AlertDialog>
                 <Button
                   variant="destructive"
-                  size="icon"
+                  size="sm"
+                  className="w-20"
                   onClick={() => {
                     const confirmed =
                       window.confirm(
@@ -153,13 +157,15 @@ export default function UrlTable({
                     }
                   }}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4" /> Delete
                 </Button>
               </AlertDialog>
+              </div>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+      </Table>
+    </div>
   );
 }

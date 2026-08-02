@@ -61,17 +61,17 @@ export default function CreateUrlCard({
 
   return (
     <Card className="mb-8">
-      <CardHeader>
+      <CardHeader className="border-b pb-4">
         <CardTitle>Shorten a URL</CardTitle>
       </CardHeader>
 
       <CardContent>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
+          className="flex flex-col gap-4 lg:flex-row lg:items-start"
         >
           {/* Original URL */}
-          <div>
+          <div className="min-w-0 flex-1">
             <Input
               placeholder="Paste your long URL..."
               {...register("originalUrl")}
@@ -83,7 +83,7 @@ export default function CreateUrlCard({
           </div>
 
           {/* Custom Alias */}
-          <div>
+          <div className="min-w-0 lg:w-1/3">
             <Input
               placeholder="Custom Alias (Optional)"
               {...register("customAlias")}
@@ -97,7 +97,7 @@ export default function CreateUrlCard({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full"
+            className="w-full lg:w-auto"
           >
             {isSubmitting
               ? "Creating..."

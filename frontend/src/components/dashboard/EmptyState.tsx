@@ -1,7 +1,7 @@
 export default function EmptyState() {
   return (
-    <div className="text-center py-16">
-      <h2 className="text-xl font-semibold">
+    <div className="rounded-xl border border-dashed bg-card/60 px-6 py-16 text-center">
+      <h2 className="text-xl font-semibold tracking-tight">
         No URLs Found
       </h2>
 

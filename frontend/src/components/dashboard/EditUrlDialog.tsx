@@ -66,10 +66,11 @@ export default function EditUrlDialog({
     <>
       <Button
         variant="outline"
-        size="icon"
+        size="sm"
+        className="w-20"
         onClick={() => setOpen(true)}
       >
-        <Pencil className="h-4 w-4" />
+        <Pencil className="h-4 w-4" /> Edit
       </Button>
 
       <Dialog

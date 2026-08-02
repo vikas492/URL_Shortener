@@ -19,9 +19,9 @@ export default function DashboardHeader({
   );
 
   return (
-    <div className="flex items-center justify-between mb-8">
+    <div className="mb-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Welcome, {user?.name} 👋
         </h1>
 
@@ -30,7 +30,7 @@ export default function DashboardHeader({
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex w-full items-center gap-3 sm:w-auto">
         <ThemeToggle />
 
         <Button

@@ -109,7 +109,7 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <main className="max-w-6xl mx-auto py-10 px-6">
+      <main className="w-full max-w-[1600px] mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:w-[84%] lg:px-0 lg:py-10">
         <DashboardHeader
           onLogout={handleLogout}
         />
@@ -120,8 +120,9 @@ export default function DashboardPage() {
           onUrlCreated={fetchDashboard}
         />
 
-        <div className="mb-6">
+        <div className="mb-6 flex justify-center">
           <Input
+            className="w-full lg:w-1/2"
             placeholder="Search by Original URL or Short Code..."
             value={search}
             onChange={(e) =>
@@ -139,7 +140,7 @@ export default function DashboardPage() {
               onDelete={fetchDashboard}
             />
 
-            <div className="flex justify-between items-center mt-6">
+            <div className="flex flex-col items-center justify-center gap-4 mt-6 sm:flex-row sm:gap-6">
               <Button
                 variant="outline"
                 disabled={currentPage === 1}

@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BarChart3, MousePointerClick, Link2 } from "lucide-react";
 
 interface StatsProps {
   stats: {
@@ -19,10 +20,11 @@ export default function StatsCards({
   stats,
 }: StatsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Total URLs</CardTitle>
+    <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <Card className="h-full transition-all hover:-translate-y-0.5 hover:shadow-md">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-muted-foreground">Total URLs</CardTitle>
+          <Link2 className="h-5 w-5 text-blue-500" />
         </CardHeader>
 
         <CardContent>
@@ -32,9 +34,10 @@ export default function StatsCards({
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Total Clicks</CardTitle>
+      <Card className="h-full transition-all hover:-translate-y-0.5 hover:shadow-md">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-muted-foreground">Total Clicks</CardTitle>
+          <MousePointerClick className="h-5 w-5 text-emerald-500" />
         </CardHeader>
 
         <CardContent>
@@ -44,9 +47,10 @@ export default function StatsCards({
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Average Clicks</CardTitle>
+      <Card className="h-full transition-all hover:-translate-y-0.5 hover:shadow-md">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-muted-foreground">Average Clicks</CardTitle>
+          <BarChart3 className="h-5 w-5 text-violet-500" />
         </CardHeader>
 
         <CardContent>
