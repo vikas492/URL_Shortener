@@ -1,0 +1,40 @@
+{
+  "name": "url-shortener-backend",
+  "version": "1.0.0",
+  "description": "Production Ready URL Shortener Backend",
+  "type": "module",
+  "main": "src/server.js",
+"scripts": {
+  "dev": "nodemon src/server.js",
+  "start": "node src/server.js",
+  "db:generate": "drizzle-kit generate --config=drizzle.config.mjs",
+  "db:migrate": "drizzle-kit migrate --config=drizzle.config.mjs"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bullmq": "^5.34.10",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.1",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nanoid": "^5.0.9",
+    "pg": "^8.13.1",
+    "redis": "^4.7.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "drizzle-kit": "^0.30.4",
+    "eslint": "^9.17.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  }
+}
