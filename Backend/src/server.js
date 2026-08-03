@@ -3,7 +3,7 @@ import "./config/env.js";
 import app from "./app.js";
 import { connectRedis } from "./config/redis.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 
 async function startServer() {
   await connectRedis();

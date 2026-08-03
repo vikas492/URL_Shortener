@@ -48,8 +48,7 @@ export default function UrlTable({
   const copyToClipboard = async (
     shortCode: string
   ) => {
-    const shortUrl =
-      `http://localhost:3000/${shortCode}`;
+    const shortUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${shortCode}`;
 
     await navigator.clipboard.writeText(
       shortUrl
@@ -109,7 +108,7 @@ export default function UrlTable({
 
             <TableCell>
               <a
-                href={`http://localhost:3000/${url.shortCode}`}
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/${url.shortCode}`}
                 target="_blank"
                 rel="noreferrer"
                 className="font-medium text-blue-600 hover:text-blue-500 hover:underline dark:text-blue-400"
