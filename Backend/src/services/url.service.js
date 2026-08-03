@@ -43,7 +43,8 @@ async create(
     shortCode,
     expiresAt: expiresAt || null,
   });
-
+console.log("BASE_URL =", process.env.BASE_URL);
+console.log("SHORT_URL =", `${process.env.BASE_URL}/${shortCode}`);
   return {
     ...url,
     shortUrl: `${process.env.BASE_URL}/${shortCode}`,
