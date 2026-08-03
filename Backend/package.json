@@ -11,7 +11,7 @@
     "db:generate": "drizzle-kit generate --config=drizzle.config.mjs",
     "db:migrate": "drizzle-kit migrate --config=drizzle.config.mjs",
 
-    "docker:start": "wait-on tcp:postgres:5432 && npm run db:migrate && npm start"
+    "docker:start": "npm run db:migrate && npm start"
   },
   "keywords": [],
   "author": "",
