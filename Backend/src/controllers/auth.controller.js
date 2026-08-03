@@ -18,10 +18,10 @@ class AuthController {
   try {
     const data = await authService.login(req.body);
 
-    res.cookie("refreshToken", data.refreshToken, {
+ res.cookie("refreshToken", data.refreshToken, {
   httpOnly: true,
-  secure: false,
-  sameSite: "lax",
+  secure: true,
+  sameSite: "none",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
@@ -72,7 +72,11 @@ async me(req, res, next) {
 
     await authService.logout(refreshToken);
 
-    res.clearCookie("refreshToken");
+    res.clearCookie("refreshToken", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+});
 
     return res.status(200).json({
       success: true,
